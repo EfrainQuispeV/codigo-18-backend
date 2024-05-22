@@ -7,6 +7,7 @@ hola como estas
 
 nota:
 len cuenta las palabras
+.
 """
 
 def contar_palabras(palaras):
