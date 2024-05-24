@@ -1,6 +1,6 @@
 #escriba un programa que retorne la suma de 2 numeros
-numero_1 = input ("ingresa el numero 1:  ")
-numero_2 = input ("ïngresa el numero 2:  ")
+numero_1 = input ("ingresa numero 1:  ")
+numero_2 = input ("ïngresa numero 2:  ")
 
 #type (variable) permite ver el tipo de dato
 print (type (numero_1), type(numero_2))
