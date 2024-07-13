@@ -1,5 +1,7 @@
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy 
 from flask_migrate import Migrate
+from flask_jwt_extended import JWTManager
 
-db = SQLAlchemy()
+db = SQLAlchemy() # instancia de clase hacer oiperaciones. agregar, eliminar modificar 
 migrate = Migrate()
+jwt = JWTManager ()

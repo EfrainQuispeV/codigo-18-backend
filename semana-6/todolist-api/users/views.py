@@ -1,0 +1,39 @@
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import User
+from .serializers import UserSerializer, UserLoginSerializer
+from django.contrib.auth.hashers import check_password
+from .utils import get_tokens_for_user
+# haremos el CRUD para Category
+
+class UserViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class AuthenticationView(APIView):
+    def post(self, request):
+        #reuest.data es la info que recibe  del cliente
+        user_request = UserLoginSerializer(data=request.data)
+
+        if not user_request.is_valid():
+            return Response({"message:": "Email y/o password incorrectos"}, status=401)
+
+        user = User.objects.get(email=user_request.data['email'])
+
+        #buscar el usuario por correo
+        if not user: 
+            return Response({"message:": "Email y/o password incorrectos"}, status=401)
+       
+       # comparar que el password sea correcto
+        user_serializer = UserSerializer(user).data
+        if not check_password(user_request.data['password'], user_serializer.get('password')):
+            return Response({"message:": "Email y/o password incorrectos"}, status=401)
+
+        tokens = get_tokens_for_user(user)
+        return Response({
+               "user": user_serializer,
+            "access_token": tokens['access'],
+            "refresh_token": tokens['refresh']
+            })
+    
